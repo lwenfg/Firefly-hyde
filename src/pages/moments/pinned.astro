@@ -6,6 +6,9 @@ import MomentCard from "@/components/moments/MomentCard.astro";
 import { externalMomentsConfig } from "@/config/externalMomentsConfig";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
+// 朋友圈功能已停用，保留原页面代码以便后续恢复。
+return Astro.redirect("/404/");
+
 const moments = await getCollection("moments");
 const pinnedMoments = moments
 	.filter((m) => m.data.pinned)

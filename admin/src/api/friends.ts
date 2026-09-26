@@ -1,7 +1,7 @@
 // 友链（Friends）API 封装：走 Edge Functions + KV（单 key 存数组，秒级生效）
 // 与后端 edge-functions/api/friends/index.js 数据模型保持一致。
 //
-// 与其余资料数据（项目/设备/技能/时间线走 Git 通道，见 ./data.ts）不同：
+// 与其余资料数据（项目/时间线走 Git 通道，见 ./data.ts）不同：
 // 友链已迁 KV，保存后秒级生效、无需构建。交互仍是 DataPage 的「本地暂存 + 整体保存」，
 // 故只暴露 getAll（读列表）+ replaceAll（整体覆盖），不做单条增删改。
 import { apiClient } from "./client";

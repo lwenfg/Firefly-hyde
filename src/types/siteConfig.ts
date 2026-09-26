@@ -36,7 +36,7 @@ export type SiteConfig = {
 	description?: string; // 网站描述，用于生成 <meta name="description">
 	keywords?: string[]; // 站点关键词，用于生成 <meta name="keywords">
 
-	lang: "en" | "zh_CN" | "zh_TW" | "ja" | "ru" | "ko";
+	lang: "en" | "zh_CN";
 
 	themeColor: {
 		hue: number;
@@ -94,11 +94,9 @@ export type SiteConfig = {
 		bangumi: boolean;
 		vndb: boolean; // VNDB 页面开关
 		gallery: boolean; // 相册页面开关
-		devices: boolean;
 		diary: boolean;
 		projects: boolean;
 		timeline: boolean;
-		skills: boolean;
 		anime: boolean; // 追番页面开关
 		mal: boolean; // MyAnimeList 页面开关
 		bilibili: boolean; // 哔哩哔哩追番页面开关
@@ -131,7 +129,6 @@ export type SiteConfig = {
 	momentsCover?: {
 		enable: boolean;
 		image?: string;
-		projects: boolean; // 项目展示页开关
 	};
 
 	// 分类导航栏开关

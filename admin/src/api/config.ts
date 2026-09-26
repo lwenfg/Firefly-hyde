@@ -1,5 +1,5 @@
 // 站点配置读写 API（Git 通道，Cloud Functions）
-// GET /api/config：并行聚合 22 个 settings/*.json
+// GET /api/config：并行聚合 20 个 settings/*.json
 // PUT /api/config：批量写回 N 个域到同一个 commit 并 push（约 3-5 分钟生效）
 import { apiClient } from "./client";
 
@@ -15,11 +15,9 @@ export type ConfigDomain =
 	| "comment"
 	| "cover"
 	| "profile"
-	| "sponsor"
 	| "license"
 	| "footer"
 	| "friends-page"
-	| "relationship"
 	| "expressive-code"
 	| "mermaid"
 	| "plantuml"
@@ -39,11 +37,9 @@ export const CONFIG_DOMAIN_LABELS: Record<ConfigDomain, string> = {
 	comment: "评论",
 	cover: "封面图",
 	profile: "个人资料",
-	sponsor: "赞助",
 	license: "许可证",
 	footer: "页脚",
 	"friends-page": "友链页面",
-	relationship: "恋爱计时",
 	"expressive-code": "代码高亮",
 	mermaid: "Mermaid",
 	plantuml: "PlantUML",
@@ -53,7 +49,7 @@ export const CONFIG_DOMAIN_LABELS: Record<ConfigDomain, string> = {
 	font: "字体",
 };
 
-// 全部 22 个域（与后端白名单顺序无关，前端按分组排序）
+// 全部 20 个域（与后端白名单顺序无关，前端按分组排序）
 export const ALL_CONFIG_DOMAINS = Object.keys(
 	CONFIG_DOMAIN_LABELS,
 ) as ConfigDomain[];

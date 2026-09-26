@@ -12,7 +12,8 @@ const config = {
 	pageKey: Astro.props.path,
 	dark: "html.dark",
 	pageTitle: "",
-	...(commentConfig.artalk?.visitorCount ? { pageview: true } : {}),
+	// 文章访问量统计已停用
+	// ...(commentConfig.artalk?.visitorCount ? { pageview: true } : {}),
 };
 ---
 <!-- Artalk -->

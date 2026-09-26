@@ -257,15 +257,7 @@ export default defineConfig({
 				if (pathname === "/bilibili/" && !siteConfig.pages.bilibili) {
 					return false;
 				}
-				if (pathname === "/bangumi/" && !siteConfig.pages.bangumi) {
-					return false;
-				}
-				if (pathname === "/vndb/" && !siteConfig.pages.vndb) {
-					return false;
-				}
-				if (pathname === "/myanimelist/" && !siteConfig.pages.mal) {
-					return false;
-				}
+				// Bangumi、VNDB、MyAnimeList 页面已停用
 				// 动态页评论嵌入页：评论关闭时重定向到 /404/，不应进 sitemap
 				if (
 					pathname === "/dynamic/comments/" &&
@@ -275,9 +267,7 @@ export default defineConfig({
 				) {
 					return false;
 				}
-				if (pathname === "/sponsor/" && !siteConfig.pages.sponsor) {
-					return false;
-				}
+				// 打赏页面已停用
 				return true;
 			},
 		}),

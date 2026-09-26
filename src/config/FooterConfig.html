@@ -10,7 +10,7 @@
         .badge-footer {
             display: flex;
             flex-direction: column;
-            padding: 10px 0;
+            gap: 10px;
             font-size: 14px;
             color: var(--primary);
         }
@@ -37,7 +37,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 4px;
             font-size: 13px;
             color: var(--primary);
             line-height: 1.8;
@@ -106,7 +105,7 @@
         </div> -->
 
         <!-- 统计服务说明 -->
-        <div class="footer-info">本网站由
+        <!-- <div class="footer-info">本网站由
             <a href="https://51.la/" target="_blank">
                 <img src="https://v6.51.la/favicon.ico" alt="51.LA"> 51.LA
             </a>
@@ -117,10 +116,10 @@
                 | <img src="//www.gstatic.com/analytics-suite/header/suite/v2/ic_analytics.svg" alt="Google Analytics">
                 Google Analytics 提供数据统计服务
             </a>
-        </div>
+        </div> -->
 
         <!-- 文案 + 版本 + 备案 -->
-        <div class="footer-info">
+        <!-- <div class="footer-info">
             <a id="versionText" href="https://github.com/CuteLeaf/Firefly" target="_blank"
                 style="display: inline-flex; align-items: center; gap: 4px;">
                 <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -145,13 +144,13 @@
                 </svg>
                 甘公网安备62102702000211号
             </a>
-        </div>
+        </div> -->
 
         <!-- 运行时间 -->
         <div class="footer-info">
-            <span id="runtime"></span>(●'◡'●)
+            <span id="runtime"></span>
             <!-- 文案 -->
-            <span>人心中的成见是一座大山</span>
+            <span>过去可知不可控，未来可控不可知</span>
         </div>
 
 
@@ -174,7 +173,7 @@
         // 网站开始运行时间（请修改为你的网站上线时间）
         // 添加防护避免重复声明
         if (typeof window.__siteStartTime === 'undefined') {
-            window.__siteStartTime = "2026-04-28 00:00:00";
+            window.__siteStartTime = "2026-09-18 00:00:00";
 
         // 运行时间函数
         function startRuntime() {

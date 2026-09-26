@@ -166,7 +166,7 @@ function StatCard({ queryKey, queryFn, label, icon, path }: StatCardProps) {
 const QUICK_ENTRANCES = [
 	{
 		title: "资料数据",
-		desc: "友链 / 项目 / 设备 / 技能 / 时间线",
+		desc: "友链 / 项目 / 时间线",
 		path: "/data",
 	},
 	{

@@ -263,16 +263,14 @@ function SiteFlagsTab() {
 		<div style={{ maxWidth: 560 }}>
 			<Banner
 				type="info"
-				description="说说 / 公告 / 友链 / 设备 4 类动态数据采用「构建期快照 + 运行时 fetch 覆盖」模式。开启此开关后，这 4 类首屏不再使用构建期快照、仅靠运行时拉取（秒级新鲜、消除快照与实时不一致的闪烁，代价是这部分内容失去 SEO 索引）。关闭则保持现状。"
+				description="说说 / 公告 / 友链 3 类动态数据采用「构建期快照 + 运行时 fetch 覆盖」模式。开启此开关后，这 3 类首屏不再使用构建期快照、仅靠运行时拉取（秒级新鲜、消除快照与实时不一致的闪烁，代价是这部分内容失去 SEO 索引）。关闭则保持现状。"
 				style={{ marginBottom: 16 }}
 			/>
 
 			{/* initValues 只在挂载时消费一次，故必须等配置加载完成后再渲染 Form（上方 isLoading 已保证） */}
 			<Form<SiteFlags>
 				initValues={data}
-				onSubmit={(values) =>
-					saveMutation.mutate(values as SiteFlags)
-				}
+				onSubmit={(values) => saveMutation.mutate(values as SiteFlags)}
 				disabled={saveMutation.isPending}
 			>
 				<Form.Switch
@@ -596,7 +594,11 @@ export function SettingsPage() {
 				</Title>
 			</div>
 
-			<Tabs className="admin-scroll-tabs" type="line" defaultActiveKey="image-hosting">
+			<Tabs
+				className="admin-scroll-tabs"
+				type="line"
+				defaultActiveKey="image-hosting"
+			>
 				<TabPane tab="图床配置" itemKey="image-hosting">
 					<div style={{ paddingTop: 16 }}>
 						<ImageHostingTab />

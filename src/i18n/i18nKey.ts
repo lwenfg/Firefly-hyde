@@ -521,11 +521,6 @@ enum I18nKey {
 	diaryNoResults = "diaryNoResults",
 	diaryTips = "diaryTips",
 
-	// 设备页面
-	devices = "devices",
-	devicesSubtitle = "devicesSubtitle",
-	devicesViewDetails = "devicesViewDetails",
-
 	// 项目展示页面
 	projectsSubtitle = "projectsSubtitle",
 	projectsAll = "projectsAll",
@@ -573,32 +568,6 @@ enum I18nKey {
 	timelineStartDate = "timelineStartDate",
 	timelineDuration = "timelineDuration",
 
-	// 技能页面
-	skills = "skills",
-	skillsSubtitle = "skillsSubtitle",
-	skillsFrontend = "skillsFrontend",
-	skillsBackend = "skillsBackend",
-	skillsDatabase = "skillsDatabase",
-	skillsTools = "skillsTools",
-	skillsOther = "skillsOther",
-	skillLevel = "skillLevel",
-	skillLevelBeginner = "skillLevelBeginner",
-	skillLevelIntermediate = "skillLevelIntermediate",
-	skillLevelAdvanced = "skillLevelAdvanced",
-	skillLevelExpert = "skillLevelExpert",
-	skillExperience = "skillExperience",
-	skillYears = "skillYears",
-	skillMonths = "skillMonths",
-	skillsTotal = "skillsTotal",
-	skillsExpert = "skillsExpert",
-	skillsAdvanced = "skillsAdvanced",
-	skillsIntermediate = "skillsIntermediate",
-	skillsBeginner = "skillsBeginner",
-	skillsAdvancedTitle = "skillsAdvancedTitle",
-	skillsProjects = "skillsProjects",
-	skillsDistribution = "skillsDistribution",
-	skillsByLevel = "skillsByLevel",
-	skillsByCategory = "skillsByCategory",
 	noData = "noData",
 
 	// 足迹页面

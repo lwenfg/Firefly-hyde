@@ -19,7 +19,7 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
         <header class="mobile-menu-header">
             <span class="mobile-menu-title">{navTitle}</span>
             <button type="button" class="mobile-menu-close" aria-label="关闭菜单">
-                <Icon name="material-symbols:close-rounded" class="text-[1.5rem]" />
+                <Icon name="material-symbols:close-rounded" class="text-[1.5rem]" is:inline={true} />
             </button>
         </header>
         <nav class="mobile-menu-list">
@@ -35,10 +35,10 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                                 aria-expanded="false"
                                 aria-controls={`mobile-submenu-${index}`}
                             >
-								{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" />}
+								{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" is:inline={true} />}
                                 <span class="mobile-menu-item-label">{link.name}</span>
                                 <Icon name="material-symbols:keyboard-arrow-down-rounded"
-                                      class="mobile-menu-item-arrow"
+                                      class="mobile-menu-item-arrow" is:inline={true}
                                 />
                             </button>
                             <div id={`mobile-submenu-${index}`} class="mobile-submenu" data-mobile-submenu inert aria-hidden="true">
@@ -50,11 +50,11 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                                         target={child.external ? "_blank" : null}
                                         rel={child.external ? "noopener noreferrer" : undefined}
                                     >
-										{child.icon && <Icon name={child.icon} class="mobile-menu-item-icon" />}
+										{child.icon && <Icon name={child.icon} class="mobile-menu-item-icon" is:inline={true} />}
                                         <span class="mobile-menu-item-label">{child.name}</span>
                                         {child.external && <Icon
                                             name="fa7-solid:arrow-up-right-from-square"
-                                            class="mobile-menu-item-external text-[0.9rem] shrink-0"
+                                            class="mobile-menu-item-external text-[0.9rem] shrink-0" is:inline={true}
                                         />}
                                     </a>
                                 ))}
@@ -69,15 +69,15 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                             target={link.external ? "_blank" : null}
                             rel={link.external ? "noopener noreferrer" : undefined}
                         >
-							{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" />}
+							{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" is:inline={true} />}
                             <span class="mobile-menu-item-label">{link.name}</span>
 							{!link.external && <Icon
                                 name="material-symbols:chevron-right-rounded"
-                                class="mobile-menu-item-arrow"
+                                class="mobile-menu-item-arrow" is:inline={true}
                             />}
 							{link.external && <Icon
                                 name="fa7-solid:arrow-up-right-from-square"
-                                class="mobile-menu-item-external text-[0.9rem] shrink-0"
+                                class="mobile-menu-item-external text-[0.9rem] shrink-0" is:inline={true}
                             />}
                         </a>
                     )}

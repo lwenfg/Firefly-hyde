@@ -73,22 +73,40 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	// lrc: "[00:00.00]歌词内容...",
 	local: {
 		playlist: [
+			// {
+			// 	name: "迷途羔羊",
+			// 	artist: "张震岳/大渊(顽童MJ116)",
+			// 	url: "/assets/music/迷途羔羊.mp3",
+			// 	cover:
+			// 		"http://p1.music.126.net/b1eSBbx2Yia0k89ocfOnjQ==/18677404023325159.jpg?param=130y130",
+			// 	lrc: "/assets/music/lrc/迷途羔羊.lrc",
+			// },
 			{
-				name: "迷途羔羊",
-				artist: "张震岳/大渊(顽童MJ116)",
-				url: "/assets/music/迷途羔羊.mp3",
-				cover:
-					"http://p1.music.126.net/b1eSBbx2Yia0k89ocfOnjQ==/18677404023325159.jpg?param=130y130",
-				lrc: "/assets/music/lrc/迷途羔羊.lrc",
+				name: "Starboy",
+				artist: "The Weeknd,Daft Punk",
+				url: "/assets/music/The Weeknd,Daft Punk - Starboy.mp3",
 			},
 			{
-				name: "Shots (Broiler Remix)",
-				artist: "Imagine Dragons、Broiler",
-				url: "/assets/music/Imagine Dragons、Broiler - Shots (Broiler Remix).mp3",
-				cover:
-					"https://163.hyc.moe/?server=netease&type=pic&id=2942293116060555",
-				lrc: "/assets/music/lrc/Shots (Broiler Remix).lrc",
+				name: "只对你有感觉",
+				artist: "飞轮海，田馥甄",
+				url: "/assets/music/只对你有感觉-飞轮海&田馥甄.mp3",
 			},
+			{
+				name: "大笨钟",
+				artist: "周杰伦",
+				url: "/assets/music/周杰伦+-+大笨钟.mp3",
+			},
+			{
+				name: "词不达意",
+				artist: "林忆莲",
+				url: "/assets/music/林忆莲+-+词不达意.mp3",
+			},
+			{
+				name: "无言感激",
+				artist: "谭咏麟",
+				url: "/assets/music/谭咏麟+-+无言感激.mp3",
+			},						
+
 		],
 	},
 };

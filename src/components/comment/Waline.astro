@@ -11,7 +11,8 @@ const config = {
 	path: Astro.props.path,
 	dark: "html.dark",
 	wordLimit: ["2", "300"],
-	...(commentConfig.waline?.visitorCount ? { pageview: true } : {}),
+	// 文章访问量统计已停用
+	// ...(commentConfig.waline?.visitorCount ? { pageview: true } : {}),
 };
 ---
 <!-- Waline -->

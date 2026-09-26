@@ -1,4 +1,4 @@
-// 一次性给四类动态内容（说说 / 公告 / 一言 / 设备）灌入初始种子数据（Node，无第三方依赖）
+// 一次性给三类动态内容（说说 / 公告 / 一言）灌入初始种子数据（Node，无第三方依赖）
 //
 // 用途：阶段 4 前台改造后，博客首屏读的是构建快照、访客侧运行时刷新读的是 KV。
 // 若 KV 是空的（真机联调测完曾清空），前台就没有动态内容可显示。本脚本登录后台、
@@ -114,7 +114,9 @@ async function main() {
 	if (EO_TOKEN) {
 		console.log("\n① warm up（预设域名访问保护，拿 eo cookie）");
 		await fetchFollow(`${BASE}/?eo_token=${encodeURIComponent(EO_TOKEN)}`);
-		console.log(`   eo cookie: ${jar.size > 0 ? "已获取" : "未获取（可能已绑自定义域名，可忽略）"}`);
+		console.log(
+			`   eo cookie: ${jar.size > 0 ? "已获取" : "未获取（可能已绑自定义域名，可忽略）"}`,
+		);
 	} else {
 		console.log("\n① 跳过 warm up（未传 eo_token，假定已绑自定义域名）");
 	}
@@ -139,7 +141,6 @@ async function main() {
 		{ name: "说说 moments", path: "/api/moments/seed" },
 		{ name: "公告 announcements", path: "/api/announcements/seed" },
 		{ name: "一言 quotes", path: "/api/quotes/seed" },
-		{ name: "设备 devices", path: "/api/devices/seed" },
 	];
 
 	console.log("\n③ seed 动态内容");
@@ -151,7 +152,9 @@ async function main() {
 		if (res.status === 200 && body?.ok) {
 			ok++;
 			if (body.skipped) {
-				console.log(`   ⏭️  ${t.name} 已有数据，跳过（total=${body.total}）。要覆盖请加 --force`);
+				console.log(
+					`   ⏭️  ${t.name} 已有数据，跳过（total=${body.total}）。要覆盖请加 --force`,
+				);
 			} else {
 				const detail = body.months
 					? `seeded=${body.seeded}，分片=${JSON.stringify(body.months)}`
@@ -170,7 +173,6 @@ async function main() {
 		console.log(`  ${BASE}/api/public/moments`);
 		console.log(`  ${BASE}/api/public/announcements`);
 		console.log(`  ${BASE}/api/public/quotes`);
-		console.log(`  ${BASE}/api/public/devices`);
 	}
 	process.exit(bad > 0 ? 1 : 0);
 }

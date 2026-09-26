@@ -16,6 +16,9 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 	// 主页
 	links.push(LinkPresets.Home);
 
+	// 关于我
+	links.push(LinkPresets.About);
+
 	// 文章及其子菜单
 	links.push({
 		name: "文章",
@@ -31,39 +34,47 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			// 标签
 			LinkPresets.Tags,
 
-			// 系列
+			/*
+			// 系列功能已停用
 			LinkPresets.Series,
+			*/
 		],
 	});
 
-	//社交及其子菜单
+	// 日常及其子菜单
+	links.push({
+		name: "日常",
+		url: "#",
+		icon: "material-symbols:bolt-outline",
+		children: [
+			/*
+			// 朋友圈功能已停用
+			LinkPresets.Moments,
+			*/
+
+			// 动态
+			LinkPresets.Dynamic,
+
+			/*
+			// 日记模块暂时停用
+			LinkPresets.Diary,
+			*/
+		],
+	});
+
+	// 社交及其子菜单
 	links.push({
 		name: "社交",
 		url: "#",
 		icon: "material-symbols:group",
 		children: [
-			// 友链
+			/*
+			// 友链功能已停用
 			LinkPresets.Friends,
+			*/
 
 			// 留言
 			LinkPresets.Guestbook,
-		],
-	});
-
-	// 我的及其子菜单
-	links.push({
-		name: "动态",
-		url: "#",
-		icon: "material-symbols:bolt-outline",
-		children: [
-			// 朋友圈 
-			LinkPresets.Moments, 
-
-			// 动态
-			LinkPresets.Dynamic,
-
-			// 日记
-			LinkPresets.Diary,
 		],
 	});
 
@@ -82,40 +93,25 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			// 书签导航
 			LinkPresets.Booknav,
 
-			// 番组计划
-			LinkPresets.Bangumi,
+			// Bangumi 已停用
+			// LinkPresets.Bangumi,
 
-			// 设备
-			LinkPresets.Devices,
-
-			// 音乐
+			/*
+			// 音乐页面入口已停用；侧边栏播放器和播放控制保留
 			LinkPresets.Music,
+			*/
 
 			// 足迹
 			LinkPresets.Places,
-			// VNDB
-			LinkPresets.VNDB,
+			// VNDB 已停用
+			// LinkPresets.VNDB,
 
-			// MyAnimeList
-			LinkPresets.MAL,
+			// MyAnimeList 已停用
+			// LinkPresets.MAL,
 		],
 	});
 
-	// 关于及其子菜单
-	links.push({
-		name: "更多",
-		url: "/content/",
-		icon: "material-symbols:info",
-		children: [
-			// 打赏
-			LinkPresets.Sponsor,
-
-			// 关于页面
-			LinkPresets.About,
-		],
-	});
-
-	// 关于及其子菜单
+	// 其他及其子菜单
 	links.push({
 		name: "其他",
 		url: "/other/",
@@ -127,50 +123,23 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 			// 时间线
 			LinkPresets.Timeline,
 
-			// 技能
-			LinkPresets.Skills,
-
+			/*
 			{
 				name: "统计",
 				url: "https://umami.seasir.top/share/cp5SqrNUOxbulLZt/seasir.top",
 				external: true,
 				icon: "fa7-solid:chart-simple",
 			},
+			*/
 		],
 	});
 
-	// 自定义导航栏链接
+	// GitHub
 	links.push({
-		name: "链接",
-		url: "#",
-		icon: "material-symbols:link",
-		// 子菜单
-		children: [
-			{
-				name: "GitHub",
-				url: "https://github.com/Seasir-Hyde/Firefly-hyde",
-				external: true,
-				icon: "fa7-brands:github",
-			},
-			{
-				name: "Gitee",
-				url: "https://gitee.com/SeasirHyde",
-				external: true,
-				icon: "fa7-brands:gitee",
-			},
-			{
-				name: "CNB",
-				url: "https://cnb.cool/W3C/Hyde/Firefly-hyde",
-				external: true,
-				icon: "tdesign:logo-cnb-filled",
-			},
-			// {
-			// 	name: "QQ交流群",
-			// 	url: "https://qq.com",
-			// 	external: true,
-			// 	icon: "fa7-brands:qq",
-			// },
-		],
+		name: "GitHub",
+		url: "https://github.com/lwenfg",
+		external: true,
+		icon: "fa7-brands:github",
 	});
 
 	// 自定义导航栏链接示例2：带子菜单（混用预设链接）
@@ -273,29 +242,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		icon: "fa7-brands:bilibili",
 		pageKey: "bilibili",
 	},
-	Bangumi: {
-		name: "番组计划",
-		url: "/bangumi/",
-		icon: "material-symbols:movie",
-		pageKey: "bangumi",
-	},
-	VNDB: {
-		name: "VNDB",
-		url: "/vndb/",
-		icon: "material-symbols:chrome-reader-mode-rounded",
-		pageKey: "vndb",
-	},
-	MAL: {
-		name: "AnimeList",
-		url: "/myanimelist/",
-		icon: "material-symbols:menu-book",
-		pageKey: "mal",
-	},
-	Devices: {
-		name: "设备",
-		url: "/devices/",
-		icon: "material-symbols:devices",
-	},
+	// Bangumi、VNDB、MyAnimeList 和设备页面已停用
 	Diary: {
 		name: "日记",
 		url: "/diary/",
@@ -305,11 +252,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "项目",
 		url: "/projects/",
 		icon: "material-symbols:work",
-	},
-	Skills: {
-		name: "技能",
-		url: "/skills/",
-		icon: "material-symbols:psychology",
 	},
 	Timeline: {
 		name: "时间线",
@@ -328,11 +270,13 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		icon: "material-symbols:location-on",
 		pageKey: "places",
 	},
+	/*
 	Moments: {
 		name: "朋友圈",
 		url: "/moments/",
 		icon: "mdi:wechat",
 	},
+	*/
 	Admin: {
 		name: "登录",
 		url: "/admin/",
@@ -344,12 +288,7 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		icon: "material-symbols:live-tv",
 		pageKey: "anime",
 	},
-	Sponsor: {
-		name: "打赏",
-		url: "/sponsor/",
-		icon: "material-symbols:favorite",
-		pageKey: "sponsor",
-	},
+	// Sponsor 已停用
 	About: {
 		name: "关于我",
 		url: "/about/",

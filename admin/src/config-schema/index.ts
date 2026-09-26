@@ -16,14 +16,16 @@ import { musicSchema } from "./music";
 import { pioSchema } from "./pio";
 import { plantumlSchema } from "./plantuml";
 import { profileSchema } from "./profile";
-import { relationshipSchema } from "./relationship";
 import { sidebarSchema } from "./sidebar";
 import { siteSchema } from "./site";
-import { sponsorSchema } from "./sponsor";
 import { wallpaperSchema } from "./wallpaper";
 import type { ConfigDomainSchema } from "./types";
 
-export type { ConfigDomainSchema, ConfigFieldSchema, ConfigGroupSchema } from "./types";
+export type {
+	ConfigDomainSchema,
+	ConfigFieldSchema,
+	ConfigGroupSchema,
+} from "./types";
 
 // 分组顺序（左侧导航）
 const GROUP_ORDER = ["站点", "布局", "功能", "内容", "外观", "开发者"] as const;
@@ -42,11 +44,9 @@ const FORM_SCHEMAS: ConfigDomainSchema[] = [
 	wallpaperSchema,
 	coverSchema,
 	profileSchema,
-	sponsorSchema,
 	licenseSchema,
 	footerSchema,
 	friendsPageSchema,
-	relationshipSchema,
 	// P2
 	expressiveCodeSchema,
 	mermaidSchema,
@@ -85,7 +85,9 @@ export function getSchemasByGroup(): Map<string, ConfigDomainSchema[]> {
 	return map;
 }
 
-export function isConfigGroup(name: string): name is (typeof GROUP_ORDER)[number] {
+export function isConfigGroup(
+	name: string,
+): name is (typeof GROUP_ORDER)[number] {
 	return (GROUP_ORDER as readonly string[]).includes(name);
 }
 

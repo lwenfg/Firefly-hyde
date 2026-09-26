@@ -1,6 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
-import { commentConfig } from "@/config";
+// import { commentConfig } from "@/config"; // 文章访问量统计已停用
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import { formatDateToYYYYMMDD } from "@/utils/date-utils";
@@ -179,6 +179,7 @@ const visibleTags =
     )
   }
 
+  {/* 文章访问量统计已停用，保留原实现便于后续恢复。
   {
     !isHome &&
       commentConfig.type === "twikoo" &&
@@ -250,6 +251,7 @@ const visibleTags =
         </div>
       )
   }
+  */}
 
   {
     showWords && typeof words === "number" && (

@@ -47,46 +47,6 @@ export const projectsData: Project[] = [
 		// (可选) 项目标签数组，用于更细致的分类。
 		tags: ["Blog", "Theme", "Open Source"],
 	},
-	{
-		id: "vue-pure-admin",
-		title: "vue-pure-admin",
-		description:
-			"一款开源免费且开箱即用的中后台管理系统模块版本。完全采用ECMAScript模块（ESM）规范来编写和组织代码，使用了最新的Vue3、 Vite、Element-Plus、TypeScript、Pinia、Tailwindcss等主流技术开发",
-		image:
-			"https://camo.githubusercontent.com/56acae4e405b42111d2ba2b56a85c3d07a93fe0d2e4865960da81df74386af3c/68747470733a2f2f7869616f7869616e3532312e6769746875622e696f2f68797065726c696e6b2f696d672f7675652d707572652d61646d696e2f312e6a7067",
-		category: "mobile",
-		techStack: [
-			"Vue3",
-			"Vite",
-			"Element-Plus++",
-			"TypeScript",
-			"Pinia",
-			"Tailwindcss",
-		],
-		status: "in-progress",
-		sourceCode: "https://github.com/pure-admin/vue-pure-admin",
-		visitUrl: "https://pure-admin.github.io/vue-pure-admin/#/login",
-		startDate: "2024-03-01",
-		featured: true,
-		tags: ["Android", "Root", "Kernel"],
-	},
-	{
-		id: "file-transfer-go",
-		title: "文件快传 - P2P文件传输工具",
-		description:
-			"Go/React开发的端到端webrtc的文件传输/文字传输/桌面共享，安全，隐私，数据不经过服务器。",
-		image:
-			"https://raw.githubusercontent.com/MatrixSeven/file-transfer-go/refs/heads/main/img.png",
-		category: "desktop",
-		techStack: ["Go", "React "],
-		status: "completed",
-		sourceCode: "https://github.com/MatrixSeven/file-transfer-go",
-		visitUrl: "https://transfer.52python.cn/",
-		startDate: "2026-02-01",
-		endDate: "2026-02-28",
-		tags: ["Android", "Tool", "Desktop"],
-		showImage: true,
-	},
 ];
 
 // Get project statistics

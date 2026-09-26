@@ -6,6 +6,9 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import { getSeriesList } from "@/utils/content-utils";
 import { getPostUrlBySlug } from "@/utils/url-utils";
 
+// 系列功能已停用，保留原页面代码以便后续恢复。
+return Astro.redirect("/404/");
+
 const seriesList = await getSeriesList();
 const totalPosts = seriesList.reduce((sum, series) => sum + series.count, 0);
 ---

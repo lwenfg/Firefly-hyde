@@ -13,7 +13,6 @@ const WIDGET_TYPE_OPTIONS = [
 	{ label: "站点日历", value: "calendar" },
 	{ label: "音乐", value: "music" },
 	{ label: "日程", value: "schedule" },
-	{ label: "恋爱时光", value: "relationship" },
 	{ label: "今日一言", value: "quoteOfTheDay" },
 	{ label: "数据统计", value: "umamiStats" },
 	{ label: "天气", value: "weather" },
@@ -70,19 +69,19 @@ const widgetItemSchema = [
 		help: "仅日历组件",
 	},
 	{
-			key: "specificConfig.dynamic.limit",
-			label: "动态条数限制",
-			control: "number" as const,
-			min: 1,
-			help: "仅动态组件",
-		},
-		{
-			key: "specificConfig.siteInfo.unknownBuildPlatform",
-			label: "未知构建平台文案",
-			control: "input" as const,
-			placeholder: "Unknown CI",
-			help: "仅站点信息组件；识别失败时显示",
-		},
+		key: "specificConfig.dynamic.limit",
+		label: "动态条数限制",
+		control: "number" as const,
+		min: 1,
+		help: "仅动态组件",
+	},
+	{
+		key: "specificConfig.siteInfo.unknownBuildPlatform",
+		label: "未知构建平台文案",
+		control: "input" as const,
+		placeholder: "Unknown CI",
+		help: "仅站点信息组件；识别失败时显示",
+	},
 ];
 
 const emptyWidget = {

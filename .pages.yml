@@ -116,9 +116,6 @@ content:
               values:
                 - { label: 中文, value: "" }
                 - { label: English, value: en }
-                - { label: 日本語, value: ja }
-                - { label: 繁體中文, value: zh_TW }
-                - { label: Русский, value: ru }
 
           - name: pinned
             label: 置顶
@@ -321,7 +318,7 @@ content:
   - name: feature-settings
     label: 🔧 功能配置
     type: group
-    description: 评论、统计、音乐、打赏、友链、特效等功能模块配置
+        description: 评论、统计、音乐、友链、特效等功能模块配置
     items:
       - name: comment-config
         label: 💬 评论系统
@@ -343,13 +340,6 @@ content:
         path: src/config/musicConfig.ts
         format: code
         description: 音乐播放模式（Meting API / 本地音乐）、播放列表、歌词设置
-
-      - name: sponsor-config
-        label: 💰 打赏页面
-        type: file
-        path: src/config/sponsorConfig.ts
-        format: code
-        description: 打赏用途、支付方式（支付宝/微信/Ko-fi/爱发电）、赞助者列表
 
       - name: friends-data
         label: 🔗 友链数据

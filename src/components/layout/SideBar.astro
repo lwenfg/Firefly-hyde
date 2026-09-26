@@ -8,14 +8,13 @@ import Dynamic from "@/components/widget/Dynamic.astro";
 import Music from "@/components/widget/Music.astro";
 import Profile from "@/components/widget/Profile.astro";
 import QuoteOfTheDay from "@/components/widget/QuoteOfTheDay.astro"; // 引入今日一言组件
-import RelationshipTimer from "@/components/widget/RelationshipTimer.astro"; // 引入恋爱计时组件
 import Schedule from "@/components/widget/Schedule.astro";
 import SidebarTOC from "@/components/widget/SidebarTOC.astro";
 import SiteInfo from "@/components/widget/SiteInfo.astro";
 import SiteStats from "@/components/widget/SiteStats.astro";
 import Tags from "@/components/widget/Tags.astro";
 import TimeGreeting from "@/components/widgets/TimeGreeting.astro"; // 引入时间问候语组件
-import UmamiStats from "@/components/widget/UmamiStats.astro"; // UmamiStats 组件
+// import UmamiStats from "@/components/widget/UmamiStats.astro"; // 访问统计已停用
 import Weather from "@/components/widget/Weather.astro"; // 引入天气组件
 
 import { sidebarLayoutConfig } from "@/config";
@@ -62,10 +61,9 @@ const componentMap = {
 	music: Music,
 	siteInfo: SiteInfo,
 	schedule: Schedule,
-	relationship: RelationshipTimer,
 	quoteOfTheDay: QuoteOfTheDay,
 	timeGreeting: TimeGreeting,
-	umamiStats: UmamiStats,
+	// umamiStats: UmamiStats,
 	weather: Weather,
 	dynamic: Dynamic,
 };
@@ -191,7 +189,7 @@ const hasInitiallyVisibleTopComponents = topComponents.some(
 						const props = getComponentProps(comp, index) as any;
 						return <Component {...props} />;
 					})}
-					<UmamiStats class="onload-animation" style="animation-delay: 50ms" />
+					{/* <UmamiStats class="onload-animation" style="animation-delay: 50ms" /> */}
 				</div>
 			) : (
 				<>

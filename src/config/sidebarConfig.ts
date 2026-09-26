@@ -104,8 +104,9 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 是否在文章详情页显示
 			showOnPostPage: false,
 		},
+		/*
 		{
-			// 组件类型：Umami 统计组件
+			// 组件类型：Umami 统计组件（访问统计已停用）
 			type: "umamiStats",
 			// 是否启用该组件
 			enable: true,
@@ -114,16 +115,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			// 是否在文章详情页显示
 			showOnPostPage: false,
 		},
-		{
-			// 组件类型：恋爱计时小组件
-			type: "relationship",
-			// 是否启用该组件
-			enable: true,
-			// 组件位置
-			position: "sticky",
-			// 是否在文章详情页显示
-			showOnPostPage: false,
-		},
+		*/
 	],
 
 	// 右侧边栏组件配置列表
@@ -389,14 +381,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			enable: true,
 			// 是否在文章详情页显示
 			showOnPostPage: false,
-		},
-		{
-			// 组件类型：恋爱计时小组件
-			type: "relationship",
-			// 是否启用该组件
-			enable: true,
-			// 是否在文章详情页显示
-			showOnPostPage: true,
 		},
 		{
 			// 组件类型：今日一言

@@ -4,7 +4,9 @@
 
 export const externalMomentsConfig = {
 	// 是否启用外部说说数据源
-	enable: true,
+	// 朋友圈功能已停用
+	// enable: true,
+	enable: false,
 
 	// GitHub Gist ID（创建 Gist 后从 URL 中获取）
 	gistId: "ee329e8726b8d77b68f23c602ae76f8c",

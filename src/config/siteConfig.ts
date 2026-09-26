@@ -3,15 +3,15 @@ import { resolvePageToggles } from "../utils/page-toggle-utils";
 import { resolveSiteLang } from "../utils/site-config-utils";
 
 // 定义站点语言
-// 语言代码，例如：'zh_CN', 'zh_TW', 'en', 'ja', 'ru', 'ko'。
+// 仅支持简体中文和英文。
 const SITE_LANG = resolveSiteLang("zh_CN");
 
 // 页面开关配置 - 控制特定页面的访问权限，设为false会返回404并自动隐藏对应的导航栏菜单项
 const pages = resolvePageToggles({
 	// ── 社交 (Social) ──────────────────────────────────
 
-	// 友链页面开关
-	friends: true,
+	// 友链功能已停用，保留配置以便后续恢复
+	friends: false,
 	// 留言板页面开关，需要配置评论系统
 	guestbook: true,
 
@@ -26,25 +26,17 @@ const pages = resolvePageToggles({
 	// 书签导航页面开关
 	booknav: true,
 	// 哔哩哔哩追番页面开关
-	bilibili: true,
-	// 番组计划页面开关
-	bangumi: true,
-	// VNDB页面开关
-	vndb: true,
-	// MyAnimeList页面开关
-	mal: true,
-	// 设备页面开关
-	devices: true,
-	// 日记页面开关
-	diary: true,
-	// 项目页面开关
-	projects: true,
+	bilibili: false,
+	// 以下 ACGN 列表功能已停用
+	bangumi: false,
+	vndb: false,
+	mal: false,
+	// 日记页面暂时停用，保留配置以便后续恢复
+	diary: false,
 	// 时间线页面开关
 	timeline: true,
-	// 技能页面开关
-	skills: true,
 	// 追番页面开关
-	anime: true,
+	anime: false,
 	// 音乐可视化页面开关
 	music: true,
 	// 足迹地图页面开关
@@ -52,27 +44,27 @@ const pages = resolvePageToggles({
 
 	// ── 关于 (About) ──────────────────────────────────
 
-	// 打赏页面开关
-	sponsor: true,
+	// 打赏功能已停用
+	sponsor: false,
 });
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "Hyde Blog",
+	title: "lwenfg",
 
 	// 站点副标题
-	subtitle: "人心中的成见是一座大山",
+	subtitle: "过去可知不可控，未来可控不可知",
 
 	// 站点 URL
-	site_url: "https://seasir.top",
+	site_url: "https://lwenfg.top",
 
 	// 站点描述
 	description:
-		"Hyde 是一个记录折腾博客搭建教程、分享教程、随笔感悟，技术探索与生活记录，都在这里。",
+		"lwenfg's blog分享技术探索、生活随笔与个人感悟。关于教程、思考与日常记录，都在这里。",
 
 	// 站点关键词
 	keywords: [
-		"Hyde",
+		"lwenfg",
 		"个人博客主题",
 		"Astro",
 		"ACGN",
@@ -147,7 +139,7 @@ export const siteConfig: SiteConfig = {
 			alt: "🍀",
 		},
 		// 导航栏标题
-		title: "Hyde",
+		title: "lwenfg",
 		// 全宽导航栏，导航栏是否占满屏幕宽度
 		widthFull: true,
 		// 导航菜单对齐方式，left：左对齐，center：居中
@@ -162,7 +154,7 @@ export const siteConfig: SiteConfig = {
 	},
 
 	// 站点开始日期，用于统计运行天数
-	siteStartDate: "2026-04-27",
+	siteStartDate: "2026-09-16",
 
 	// 站点时区（IANA 时区字符串），用于格式化bangumi、rss里的构建日期时间等等..
 	// 示例："Asia/Shanghai", "UTC", 如果为空，则按照构建服务器的时区进行时区转换
@@ -174,14 +166,14 @@ export const siteConfig: SiteConfig = {
 	// 足迹地图配置（高德地图）
 	placesMap: {
 		// 高德 Web 端 JS API Key
-		amapKey: "599f1507ae283cc3d8fe300a2327b876",
+		amapKey: "f2d3148ff250110495279a71093e54fb",
 		// 高德安全密钥
-		amapSecurityJsCode: "a128a9062568528700bbd3a8cc574a37",
+		amapSecurityJsCode: "1d45c6e333c4f15c0dc64d8a155b368f",
 		// 站点主人位置（地图初始中心和标记点）
 		ownerLocation: {
-			lng: 113.321276,
-			lat: 23.119376,
-			label: "中国尊",
+			lng: 120.688263,
+			lat: 36.361416,
+			label: "QingDao Campus, Shandong University",
 		},
 	},
 	// 日记页面配置
@@ -324,65 +316,10 @@ export const siteConfig: SiteConfig = {
 		uid: "38932988",
 	},
 
-	// ── 番组计划bangumi配置 ──────────────────────────────────
-	bangumi: {
-		// Bangumi用户ID
-		userId: "1143164",
-		// 数据模式：static=构建时获取，dynamic=客户端实时获取
-		// static 模式在构建时获取数据并静态渲染，部署后数据不更新
-		// dynamic 模式在浏览器中实时请求 API，始终显示最新数据
-		mode: "dynamic",
-		// Bangumi API 地址
-		apiUrl: "https://api.bangumi.pro",
-		// 详情页地址
-		subjectBaseUrl: "https://api.bangumi.pro/subject/",
-		// 条目类型排序，数组中的类型将按顺序优先展示
-		// 可选值: "anime" | "book" | "music" | "game" | "real" (暂不支持"real"类型)
-		// 未列出的类型将按默认顺序排在后面
-		categoryOrder: ["anime", "book", "music", "game"],
-		// 控制各分类的启用状态（true/false），未指定的分类默认启用
-		// categories: {
-		// 	game: false, // 禁用游戏分类显示
-		// },
-		// NSFW 处理："off" 不过滤 | "blur" 仅模糊封面 | "hide" 隐藏条目
-		nsfw: "hide",
-	},
-
-	// ── VNDB配置 ──────────────────────────────────
-	vndb: {
-		// VNDB 用户 ID
-		userId: "u358128",
-		// 数据模式：static=构建时获取，dynamic=客户端实时获取
-		// static 模式在构建时获取数据并静态渲染，部署后数据不更新
-		// dynamic 模式在浏览器中实时请求 API，始终显示最新数据
-		mode: "static",
-		// 构建时下载并压缩封面到 public/vndb-covers，图片由本站服务器提供
-		downloadCovers: false,
-		// VNDB API 地址
-		apiUrl: "https://api.vndb.org/kana",
-		// 条目详情页地址，末尾需要带 /
-		vnBaseUrl: "https://vndb.org/",
-		// 私密列表访问令牌，仅 static 模式下使用；不要把真实令牌提交到公开仓库！
-		apiToken: "",
-		// NSFW 处理："off" 不过滤 | "blur" 仅模糊封面 | "hide" 隐藏条目
-		nsfw: "hide",
-	},
-
-	// ── MyAnimeList配置 ──────────────────────────────────
-	mal: {
-		// MyAnimeList 用户名（列表需为公开状态，私密列表无法读取）
-		username: "cuteleaf",
-		// MyAnimeList Client ID，在 https://myanimelist.net/apiconfig 注册免费应用后获取
-		clientId: "	0ef34371450f9c6c809deaadec6aa8f3",
-		// MAL API 地址
-		apiUrl: "https://api.myanimelist.net/v2",
-		// 动画条目详情页地址，末尾需要带 /
-		animeBaseUrl: "https://myanimelist.net/anime/",
-		// 漫画条目详情页地址，末尾需要带 /
-		mangaBaseUrl: "https://myanimelist.net/manga/",
-		// NSFW 处理："off" 不过滤 | "blur" 仅模糊封面 | "hide" 隐藏条目
-		nsfw: "hide",
-	},
+	/*
+	 * Bangumi、VNDB、MyAnimeList 功能已停用。
+	 * 原配置保留在版本历史中，不再参与构建或页面渲染。
+	 */
 
 	// 音乐配置
 	music: {
@@ -413,12 +350,7 @@ export const siteConfig: SiteConfig = {
 		// 为特定域名的图片添加 referrerpolicy="no-referrer" 属性
 		// 支持通配符 *，例如：["i0.hdslb.com", "*.bilibili.com"]
 		// 可解决指定域名图片加载时的 403 问题（如防盗链图片）
-		noReferrerDomains: [
-			"*.hdslb.com",
-			"*.bilibili.com",
-			"*.myanimelist.net",
-			"*.vndb.org",
-		],
+		noReferrerDomains: ["*.hdslb.com", "*.bilibili.com"],
 	},
 
 	// ── 订阅 (RSS / Atom) 配置 ──────────────────────────────────

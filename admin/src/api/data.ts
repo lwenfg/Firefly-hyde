@@ -1,4 +1,4 @@
-// 资料数据（友链/项目/设备/技能/时间线）API 封装
+// 资料数据（友链/项目/时间线）API 封装
 // 走 Git 通道（Cloud Functions）：GET 读 CNB main 上的 src/data/<name>.json（push 后即刻可读），
 // PUT 把整个数组/对象写回并 git push（触发 CNB 流水线重建，约 3-5 分钟生效）。
 // 与后端 cloud-functions/api/data/[name].js 白名单保持一致。
@@ -36,36 +36,6 @@ export interface Project {
 	showImage?: boolean;
 }
 
-// 设备（对齐 src/data/devices.ts Device）
-export interface Device {
-	name: string;
-	image: string;
-	specs: string;
-	description: string;
-	link: string;
-	price?: string;
-}
-
-// 设备原始存储结构：类别 → 设备数组（嵌套）
-export type DeviceCategory = Record<string, Device[]>;
-
-// 技能（对齐 src/data/skills.ts Skill）
-export interface Skill {
-	id: string;
-	name: string;
-	description: string;
-	icon: string;
-	category: "frontend" | "backend" | "database" | "tools" | "other";
-	level: "beginner" | "intermediate" | "advanced" | "expert";
-	experience: {
-		years: number;
-		months: number;
-	};
-	projects?: string[];
-	certifications?: string[];
-	color?: string;
-}
-
 // 时间线链接（对齐 src/components/features/timeline/types.ts）
 export interface TimelineLink {
 	name: string;
@@ -93,12 +63,7 @@ export interface TimelineItem {
 }
 
 // 白名单内的资料数据类型名（与后端 ALLOWED_NAMES 一致）
-export type DataName =
-	| "friends"
-	| "projects"
-	| "devices"
-	| "skills"
-	| "timeline";
+export type DataName = "friends" | "projects" | "timeline";
 
 // GET 返回体：{ name, data }（data 为对应 JSON 的原始内容）
 export interface DataGetResult<T = unknown> {
@@ -115,7 +80,7 @@ export interface DataSaveResult {
 }
 
 export const dataApi = {
-	// 读某类资料数据（friends/projects/skills/timeline 是数组，devices 是嵌套对象）
+	// 读某类资料数据
 	get: <T = unknown>(name: DataName) =>
 		apiClient.get<DataGetResult<T>>(`/api/data/${name}`),
 	// 整体写回并触发构建

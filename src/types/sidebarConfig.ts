@@ -11,7 +11,6 @@ export type WidgetComponentType =
 	| "music"
 	| "schedule"
 	| "siteInfo"
-	| "relationship"
 	| "quoteOfTheDay"
 	| "umamiStats"
 	| "weather"

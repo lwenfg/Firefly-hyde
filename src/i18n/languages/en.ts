@@ -535,16 +535,11 @@ export const en: Translation = {
 	[Key.diaryHoursAgo]: "hours ago",
 	[Key.diaryDaysAgo]: "days ago",
 
-	// Devices Page
-	[Key.devices]: "My Devices",
-	[Key.devicesSubtitle]: "Here are the devices I use in my daily life",
-	[Key.devicesViewDetails]: "View Details",
 	[Key.albumsPhotoCount]: "photo",
 	[Key.albumsPhotosCount]: "photos",
 	[Key.albumsNoResults]: "No matching albums",
 
 	// Projects Page
-	[Key.projects]: "Projects",
 	[Key.projectsSubtitle]: "My development project portfolio",
 	[Key.projectsAll]: "All",
 	[Key.projectsWeb]: "Web Applications",
@@ -569,33 +564,6 @@ export const en: Translation = {
 	[Key.projectsSource]: "Source Code",
 	[Key.projectsVisit]: "Visit Project",
 	[Key.projectsGitHub]: "GitHub",
-
-	// Skills Page
-	[Key.skills]: "Skills",
-	[Key.skillsSubtitle]: "My technical skills and expertise",
-	[Key.skillsFrontend]: "Frontend Development",
-	[Key.skillsBackend]: "Backend Development",
-	[Key.skillsDatabase]: "Database",
-	[Key.skillsTools]: "Development Tools",
-	[Key.skillsOther]: "Other Skills",
-	[Key.skillLevel]: "Proficiency",
-	[Key.skillLevelBeginner]: "Beginner",
-	[Key.skillLevelIntermediate]: "Intermediate",
-	[Key.skillLevelAdvanced]: "Advanced",
-	[Key.skillLevelExpert]: "Expert",
-	[Key.skillExperience]: "Experience",
-	[Key.skillYears]: "years",
-	[Key.skillMonths]: "months",
-	[Key.skillsTotal]: "Total Skills",
-	[Key.skillsExpert]: "Expert Level",
-	[Key.skillsAdvanced]: "Advanced",
-	[Key.skillsIntermediate]: "Intermediate",
-	[Key.skillsBeginner]: "Beginner",
-	[Key.skillsAdvancedTitle]: "Professional Skills",
-	[Key.skillsProjects]: "Related Projects",
-	[Key.skillsDistribution]: "Skill Distribution",
-	[Key.skillsByLevel]: "By Level",
-	[Key.skillsByCategory]: "By Category",
 
 	// Timeline Page
 	[Key.timeline]: "Timeline",

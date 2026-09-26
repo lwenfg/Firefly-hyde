@@ -197,7 +197,9 @@ onDestroy(() => {
 			<a href="/" class="music-navbar-link">首页</a>
 			<a href="/archive/" class="music-navbar-link">归档</a>
 			<a href="/about/" class="music-navbar-link">关于</a>
+			<!-- 友链功能已停用
 			<a href="/friends/" class="music-navbar-link">友链</a>
+			-->
 			<a href="/music/" class="music-navbar-link active">音乐</a>
 		</div>
 	</nav>

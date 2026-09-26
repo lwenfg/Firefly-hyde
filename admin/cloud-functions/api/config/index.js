@@ -1,7 +1,7 @@
 /**
  * GET / PUT /api/config
  * 站点配置读写通道（Cloud Functions，Node.js 20）：
- *   GET：Promise.all 并行 fetch CNB raw 读 src/config/settings/<domain>.json（22 个域，
+ *   GET：Promise.all 并行 fetch CNB raw 读 src/config/settings/<domain>.json（20 个域，
  *        读 main 分支，push 后即刻可读，不必等构建）。单域读取/解析失败该域返回 null
  *        并附 errors，不整体失败。
  *   PUT：body { changes: { [domain]: object }, commitMessage? }，把 N 个域文件写进
@@ -29,7 +29,7 @@ import { jsonResponse } from "../../_shared/response.js";
 
 const SETTINGS_DIR = "src/config/settings";
 
-// 配置域白名单：域名 = settings/ 目录下 JSON 文件名 = API key（22 个，以目录实际文件为准）。
+// 配置域白名单：域名 = settings/ 目录下 JSON 文件名 = API key（20 个，以目录实际文件为准）。
 // 中文名用于默认 commit message「配置: 更新 <域中文名列表>」。
 const DOMAINS = {
 	site: "站点",
@@ -42,11 +42,9 @@ const DOMAINS = {
 	comment: "评论",
 	cover: "封面图",
 	profile: "个人资料",
-	sponsor: "赞助",
 	license: "许可证",
 	footer: "页脚",
 	"friends-page": "友链页面",
-	relationship: "恋爱计时",
 	"expressive-code": "代码高亮",
 	mermaid: "Mermaid",
 	plantuml: "PlantUML",
@@ -72,7 +70,7 @@ const RULES = {
 		site_url: "string",
 		description: "string",
 		keywords: "array",
-		lang: { enum: ["zh_CN", "zh_TW", "en", "ja", "ru"] },
+		lang: { enum: ["zh_CN", "en"] },
 		themeColor: "object",
 		"themeColor.hue": { number: [0, 360] },
 		"themeColor.fixed": "boolean",
@@ -93,7 +91,6 @@ const RULES = {
 		"imageOptimization.noReferrerDomains": "array",
 		// 进 astro.config.mjs 的 import 路径 rehype-callouts/theme/<theme>
 		"rehypeCallouts.theme": "string",
-		"bangumi.categoryOrder": "array",
 		"aiSummary.enable": "boolean",
 		outdatedThreshold: "number",
 	},
@@ -160,13 +157,6 @@ const RULES = {
 		bio: "string",
 		links: "array",
 	},
-	sponsor: {
-		showSponsorsList: "boolean",
-		showComment: "boolean",
-		showButtonInPost: "boolean",
-		methods: "array",
-		sponsors: "array",
-	},
 	license: { enable: "boolean", name: "string", url: "string", icon: "string" },
 	footer: { enable: "boolean" },
 	"friends-page": {
@@ -175,14 +165,6 @@ const RULES = {
 		showCustomContent: "boolean",
 		showComment: "boolean",
 		randomizeSort: "boolean",
-	},
-	relationship: {
-		startDate: "string",
-		name1: "string",
-		name2: "string",
-		avatar1: "string",
-		avatar2: "string",
-		title: "string",
 	},
 	"expressive-code": {
 		// 主题名进 astro.config.mjs 的 expressiveCode themes，类型错炸构建
@@ -221,19 +203,19 @@ const RULES = {
 		"!albums": "array",
 		columnWidth: "number",
 	},
-		// Astro Font API：{ fontConfig, fontsList }（旧 preload/fonts 表结构已废弃）
-		font: {
-			"!fontConfig": "object",
-			"!fontsList": "array",
-			"fontConfig.enable": "boolean",
-			"fontConfig.selected": "array",
-			"fontConfig.bannerTitleFont": "string",
-			"fontConfig.bannerSubtitleFont": "string",
-			"fontConfig.navbarTitleFont": "string",
-			"fontConfig.codeFont": "string",
-			"fontConfig.subsetFonts": "object",
-		},
-	};
+	// Astro Font API：{ fontConfig, fontsList }（旧 preload/fonts 表结构已废弃）
+	font: {
+		"!fontConfig": "object",
+		"!fontsList": "array",
+		"fontConfig.enable": "boolean",
+		"fontConfig.selected": "array",
+		"fontConfig.bannerTitleFont": "string",
+		"fontConfig.bannerSubtitleFont": "string",
+		"fontConfig.navbarTitleFont": "string",
+		"fontConfig.codeFont": "string",
+		"fontConfig.subsetFonts": "object",
+	},
+};
 
 function isPlainObject(value) {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -256,10 +238,18 @@ function collectPath(root, domain, path) {
 			}
 			if (seg === "*") {
 				for (const key of Object.keys(item.value)) {
-					next.push({ label: `${item.label}.${key}`, value: item.value[key], found: true });
+					next.push({
+						label: `${item.label}.${key}`,
+						value: item.value[key],
+						found: true,
+					});
 				}
 			} else if (Object.hasOwn(item.value, seg)) {
-				next.push({ label: `${item.label}.${seg}`, value: item.value[seg], found: true });
+				next.push({
+					label: `${item.label}.${seg}`,
+					value: item.value[seg],
+					found: true,
+				});
 			} else {
 				next.push({ label: `${item.label}.${seg}`, found: false });
 			}
@@ -271,22 +261,28 @@ function collectPath(root, domain, path) {
 
 // 校验单个值，返回错误描述或 null
 function ruleError(value, rule) {
-	if (rule === "boolean") return typeof value === "boolean" ? null : "应为布尔值";
+	if (rule === "boolean")
+		return typeof value === "boolean" ? null : "应为布尔值";
 	if (rule === "string") return typeof value === "string" ? null : "应为字符串";
 	if (rule === "number") {
-		return typeof value === "number" && Number.isFinite(value) ? null : "应为数字";
+		return typeof value === "number" && Number.isFinite(value)
+			? null
+			: "应为数字";
 	}
 	if (rule === "array") return Array.isArray(value) ? null : "应为数组";
 	if (rule === "object") return isPlainObject(value) ? null : "应为对象";
 	if (rule.enum) {
-		return rule.enum.includes(value) ? null : `应为 ${rule.enum.join(" / ")} 之一`;
+		return rule.enum.includes(value)
+			? null
+			: `应为 ${rule.enum.join(" / ")} 之一`;
 	}
 	const range = rule.number || rule.int;
 	if (range) {
 		const [min, max] = range;
 		if (typeof value !== "number" || !Number.isFinite(value)) return "应为数字";
 		if (rule.int && !Number.isInteger(value)) return "应为整数";
-		if (max !== undefined && (value < min || value > max)) return `应在 ${min} ~ ${max} 范围内`;
+		if (max !== undefined && (value < min || value > max))
+			return `应在 ${min} ~ ${max} 范围内`;
 		if (value < min) return `应不小于 ${min}`;
 		return null;
 	}
@@ -323,7 +319,7 @@ function serialize(data) {
 	return `${JSON.stringify(data, null, "\t")}\n`;
 }
 
-// GET：并行读 22 个域，单域失败不影响整体
+// GET：并行读 20 个域，单域失败不影响整体
 async function handleGet(context) {
 	const auth = await requireAuth(context);
 	if (auth instanceof Response) return auth;
@@ -335,7 +331,8 @@ async function handleGet(context) {
 				const raw = await getRaw(context.env, `${SETTINGS_DIR}/${name}.json`);
 				return [name, JSON.parse(raw), null];
 			} catch (err) {
-				const message = err instanceof CnbError ? err.message : `解析 ${name}.json 失败`;
+				const message =
+					err instanceof CnbError ? err.message : `解析 ${name}.json 失败`;
 				return [name, null, message];
 			}
 		}),
@@ -361,7 +358,10 @@ async function handlePut(context) {
 	try {
 		body = await context.request.json();
 	} catch {
-		return jsonResponse({ error: "请求体解析失败" }, { status: 400, cache: "no-store" });
+		return jsonResponse(
+			{ error: "请求体解析失败" },
+			{ status: 400, cache: "no-store" },
+		);
 	}
 
 	const changes = body?.changes;
@@ -404,11 +404,20 @@ async function handlePut(context) {
 	try {
 		const result = await commitAndPush(context.env, message, async (dir) => {
 			for (const name of names) {
-				await writeRepoFile(dir, `${SETTINGS_DIR}/${name}.json`, serialize(changes[name]));
+				await writeRepoFile(
+					dir,
+					`${SETTINGS_DIR}/${name}.json`,
+					serialize(changes[name]),
+				);
 			}
 		});
 		return jsonResponse(
-			{ ok: true, domains: names, commit: result.commitOid, branch: result.branch },
+			{
+				ok: true,
+				domains: names,
+				commit: result.commitOid,
+				branch: result.branch,
+			},
 			{ cache: "no-store" },
 		);
 	} catch (err) {
@@ -424,5 +433,8 @@ export async function onRequest(context) {
 	const method = context.request.method;
 	if (method === "GET") return handleGet(context);
 	if (method === "PUT") return handlePut(context);
-	return jsonResponse({ error: "method_not_allowed" }, { status: 405, cache: "no-store" });
+	return jsonResponse(
+		{ error: "method_not_allowed" },
+		{ status: 405, cache: "no-store" },
+	);
 }

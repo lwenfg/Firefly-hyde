@@ -63,30 +63,7 @@ const KEY_PAGES: KeyPage[] = [
 		descKey: I18nKey.bilibiliSubtitle,
 		pageKey: "bilibili",
 	},
-	{
-		labelKey: I18nKey.bangumi,
-		path: "/bangumi/",
-		descKey: I18nKey.bangumiSubtitle,
-		pageKey: "bangumi",
-	},
-	{
-		labelKey: I18nKey.vndb,
-		path: "/vndb/",
-		descKey: I18nKey.vndbSubtitle,
-		pageKey: "vndb",
-	},
-	{
-		labelKey: I18nKey.mal,
-		path: "/myanimelist/",
-		descKey: I18nKey.malSubtitle,
-		pageKey: "mal",
-	},
-	{
-		labelKey: I18nKey.sponsor,
-		path: "/sponsor/",
-		descKey: I18nKey.sponsorDescription,
-		pageKey: "sponsor",
-	},
+	// Bangumi、VNDB、MyAnimeList、打赏页面已停用
 ];
 
 export const GET: APIRoute = async ({ site }) => {

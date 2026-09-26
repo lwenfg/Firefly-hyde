@@ -166,7 +166,7 @@ const logoVariants = await Promise.all(
                     siteConfig.navbar.followTheme ? "text-(--primary)" : "dark:text-white text-black"
                 ]} style="font-family: var(--font-navbar-title, inherit)">
                                     {logoConfig?.type === "icon" ? (
-                                        <Icon name={logoConfig.value || "material-symbols:home-pin-outline"} class="navbar-logo text-[1.75rem] mb-1 mr-2" />
+                                        <Icon name={logoConfig.value || "material-symbols:home-pin-outline"} class="navbar-logo text-[1.75rem] mb-1 mr-2" is:inline={true} />
                                     ) : logoIsImage && logoVariants.length > 0 ? (
                                         logoVariants.map((variant) => variant.image ? (
                                             <Picture
@@ -184,7 +184,7 @@ const logoVariants = await Promise.all(
                                             <img src={variant.src} alt={logoAlt} class={variant.class} data-logo-theme={variant.theme} fetchpriority="high" />
                                         ))
                                     ) : (
-                                        <Icon name="material-symbols:home-pin-outline" class="navbar-logo text-[1.75rem] mb-1 mr-2" />
+                                        <Icon name="material-symbols:home-pin-outline" class="navbar-logo text-[1.75rem] mb-1 mr-2" is:inline={true} />
                                     )}
                     {navbarTitle}
                 </div>
@@ -206,9 +206,10 @@ const logoVariants = await Promise.all(
                 />
                 {musicPlayerConfig.showInNavbar && (
                     <button aria-label={i18n(I18nKey.music)} aria-controls="music-nav-panel" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="music-player-switch">
-                        <Icon name="material-symbols:music-note-rounded" class="text-[1.25rem]"></Icon>
+                        <Icon name="material-symbols:music-note-rounded" class="text-[1.25rem]" is:inline={true}></Icon>
                     </button>
                 )}
+                {/* 背景视频播放按钮暂时停用，保留原实现便于后续恢复。
                 {backgroundWallpaper.playerEnable && backgroundWallpaper.mode !== "none" && (
                     <button
                         aria-label={i18n(I18nKey.videoPlay)}
@@ -221,15 +222,16 @@ const logoVariants = await Promise.all(
                         <span class="bg-player-icon-pause hidden"><Icon name="material-symbols:pause-rounded" class="text-[1.5rem]" /></span>
                     </button>
                 )}
+                */}
                 {hasDisplaySettings && (
                         <button aria-label="Display Settings" aria-controls="display-setting" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="display-settings-switch">
-                            <Icon name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
+                            <Icon name="material-symbols:palette-outline" class="text-[1.25rem]" is:inline={true}></Icon>
                         </button>
                 )}
                 {/* @ts-ignore */}
                 <LightDarkSwitch client:load></LightDarkSwitch>
                 <button aria-label="Menu" aria-controls="nav-menu-panel" aria-expanded="false" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 lg:hidden!" id="nav-menu-switch">
-                    <Icon name="material-symbols:menu-rounded" class="text-[1.25rem]"></Icon>
+                    <Icon name="material-symbols:menu-rounded" class="text-[1.25rem]" is:inline={true}></Icon>
                 </button>
             </div>
         </div>
@@ -280,7 +282,7 @@ function loadButtonScript() {
         };
     }
 
-    // 背景视频播放器控制按钮
+    /* 背景视频播放器控制按钮暂时停用，保留原实现便于后续恢复。
     let bgPlayerBtn = document.getElementById("bg-player-toggle");
     if (bgPlayerBtn) {
         bgPlayerBtn.onclick = function () {
@@ -323,6 +325,7 @@ function loadButtonScript() {
             });
         }
     }
+    */
 
     let themeSwitchBtn = document.getElementById("scheme-switch");
     if (themeSwitchBtn) {

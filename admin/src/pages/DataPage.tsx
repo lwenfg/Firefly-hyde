@@ -1,12 +1,11 @@
-// 资料数据管理页：友链 / 项目 / 设备 / 技能 / 时间线 5 个 Tab
+// 资料数据管理页：友链 / 项目 / 时间线 3 个 Tab
 //
 // 通道：
-//   - 友链 / 设备：KV 通道（Edge Functions），保存约 1 分钟内前台生效、无需构建
-//   - 项目 / 技能 / 时间线：Git 通道（Cloud Functions），PUT 写回仓库并触发构建约 3-5 分钟
+//   - 友链：KV 通道（Edge Functions），保存约 1 分钟内前台生效、无需构建
+//   - 项目 / 时间线：Git 通道（Cloud Functions），PUT 写回仓库并触发构建约 3-5 分钟
 //
 // 交互：本地暂存 + 显式保存。每个 Tab 独立维护本地行数据，增删改只改本地状态并标 dirty，
-// 点「保存」/「保存到仓库」才整体 PUT。设备是嵌套「类别→设备数组」，加载时拍平成带类别列的行，
-// 保存时按类别重组回嵌套对象。
+// 点「保存」/「保存到仓库」才整体 PUT。
 //
 // 布局一律用原生 <div>（Semi 2.83 的 <Space vertical/align> 在此环境报 TS2322，坑 18）。
 import {
@@ -46,15 +45,12 @@ import { type ReactNode, useCallback, useEffect, useState } from "react";
 import { PhotoView } from "react-photo-view";
 import {
 	type DataName,
-	type Device,
 	dataApi,
 	type FriendLink,
 	type Project,
-	type Skill,
 	type TimelineItem,
 	type TimelineLink,
 } from "@/api/data";
-import { type DeviceCategory, devicesApi } from "@/api/devices";
 import {
 	type FriendApplication,
 	type FriendApplicationStatus,
@@ -386,127 +382,125 @@ function DataTabPanel<T extends Record<string, any>>(
 	return (
 		<BusySpin
 			spinning={saveMutation.isPending}
-			tip={
-				invalidateBuilds
-					? "正在提交到仓库，约需数十秒…"
-					: "正在保存…"
-			}
+			tip={invalidateBuilds ? "正在提交到仓库，约需数十秒…" : "正在保存…"}
 		>
 			<div>
-			{/* 顶部操作栏 */}
-			<div
-				style={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "space-between",
-					marginBottom: 12,
-					gap: 8,
-					flexWrap: "wrap",
-				}}
-			>
-				<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-					<Button
-						icon={<IconPlus />}
-						theme="solid"
-						type="primary"
-						onClick={openCreate}
-						disabled={isLoading || isError}
-					>
-						{addLabel}
-					</Button>
-					<Button
-						icon={<IconRefresh />}
-						onClick={() => refetch()}
-						loading={isFetching}
-					>
-						重新加载
-					</Button>
-				</div>
-				<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-					{dirty ? (
-						<Popconfirm
-							title="放弃本地修改？"
-							content="将丢弃未保存的增删改，恢复到服务端当前内容"
-							okType="danger"
-							onConfirm={resetLocal}
-						>
-							<Button type="tertiary">放弃修改</Button>
-						</Popconfirm>
-					) : null}
-					<Button
-						icon={<IconSave />}
-						theme="solid"
-						type="primary"
-						disabled={!dirty}
-						loading={saveMutation.isPending}
-						onClick={() => saveMutation.mutate()}
-					>
-						{saveLabel ?? "保存到仓库"}
-					</Button>
-				</div>
-			</div>
-
-			{/* dirty 提示 */}
-			{dirty ? (
-				<Banner
-					type="warning"
-					description={
-						dirtyHint ??
-						"本地有未保存的修改。点击「保存到仓库」写回并触发构建（约 3-5 分钟生效）。"
-					}
-					style={{ marginBottom: 12 }}
-					closeIcon={null}
-				/>
-			) : null}
-
-			{isError ? (
-				<Empty
-					image={<div style={{ fontSize: 48 }}>⚠️</div>}
-					title="读取失败"
-					description={(error as Error)?.message || "请检查 CNB 通道或稍后重试"}
+				{/* 顶部操作栏 */}
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "space-between",
+						marginBottom: 12,
+						gap: 8,
+						flexWrap: "wrap",
+					}}
 				>
-					<Button onClick={() => refetch()}>重试</Button>
-				</Empty>
-			) : (
-				// 整表包一层:图片列的 PhotoView 注册进同一预览组,点任一小图可切换整组
-				<AdminPhotoProvider>
-					<Table<T>
-						columns={columns({ edit: openEdit, remove: removeRow })}
-						dataSource={items}
-						rowKey={rowKey}
-						loading={isLoading}
-						empty={
-							<Empty title={emptyText} description="点击左上角新建第一条" />
-						}
-						// 移动端保持表格形态、区域内横向滑动(已拍板不做精简列);桌面不传 scroll
-						scroll={isMobile ? { x: mobileScrollX } : undefined}
-						pagination={{
-							pageSize: 10,
-							formatPageText: (p) => `共 ${p?.total ?? 0} 条`,
-						}}
-					/>
-				</AdminPhotoProvider>
-			)}
+					<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+						<Button
+							icon={<IconPlus />}
+							theme="solid"
+							type="primary"
+							onClick={openCreate}
+							disabled={isLoading || isError}
+						>
+							{addLabel}
+						</Button>
+						<Button
+							icon={<IconRefresh />}
+							onClick={() => refetch()}
+							loading={isFetching}
+						>
+							重新加载
+						</Button>
+					</div>
+					<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+						{dirty ? (
+							<Popconfirm
+								title="放弃本地修改？"
+								content="将丢弃未保存的增删改，恢复到服务端当前内容"
+								okType="danger"
+								onConfirm={resetLocal}
+							>
+								<Button type="tertiary">放弃修改</Button>
+							</Popconfirm>
+						) : null}
+						<Button
+							icon={<IconSave />}
+							theme="solid"
+							type="primary"
+							disabled={!dirty}
+							loading={saveMutation.isPending}
+							onClick={() => saveMutation.mutate()}
+						>
+							{saveLabel ?? "保存到仓库"}
+						</Button>
+					</div>
+				</div>
 
-			<Modal
-				title={
-					editIndex === null ? `新建${addLabel.replace(/^新建/, "")}` : "编辑"
-				}
-				visible={editorVisible}
-				onOk={handleModalOk}
-				onCancel={() => setEditorVisible(false)}
-				okText="确定"
-				cancelText="取消"
-				maskClosable={false}
-				// 桌面 width 600 + 原 70vh 限高;小屏 fullScreen + 全屏滚动(均由 useModalProps 提供)
-				{...modalProps}
-				bodyStyle={
-					modalProps.bodyStyle ?? { maxHeight: "70vh", overflowY: "auto" }
-				}
-			>
-				{draft ? renderForm(draft, patchDraft) : null}
-			</Modal>
-		</div>
+				{/* dirty 提示 */}
+				{dirty ? (
+					<Banner
+						type="warning"
+						description={
+							dirtyHint ??
+							"本地有未保存的修改。点击「保存到仓库」写回并触发构建（约 3-5 分钟生效）。"
+						}
+						style={{ marginBottom: 12 }}
+						closeIcon={null}
+					/>
+				) : null}
+
+				{isError ? (
+					<Empty
+						image={<div style={{ fontSize: 48 }}>⚠️</div>}
+						title="读取失败"
+						description={
+							(error as Error)?.message || "请检查 CNB 通道或稍后重试"
+						}
+					>
+						<Button onClick={() => refetch()}>重试</Button>
+					</Empty>
+				) : (
+					// 整表包一层:图片列的 PhotoView 注册进同一预览组,点任一小图可切换整组
+					<AdminPhotoProvider>
+						<Table<T>
+							columns={columns({ edit: openEdit, remove: removeRow })}
+							dataSource={items}
+							rowKey={rowKey}
+							loading={isLoading}
+							empty={
+								<Empty title={emptyText} description="点击左上角新建第一条" />
+							}
+							// 移动端保持表格形态、区域内横向滑动(已拍板不做精简列);桌面不传 scroll
+							scroll={isMobile ? { x: mobileScrollX } : undefined}
+							pagination={{
+								pageSize: 10,
+								formatPageText: (p) => `共 ${p?.total ?? 0} 条`,
+							}}
+						/>
+					</AdminPhotoProvider>
+				)}
+
+				<Modal
+					title={
+						editIndex === null ? `新建${addLabel.replace(/^新建/, "")}` : "编辑"
+					}
+					visible={editorVisible}
+					onOk={handleModalOk}
+					onCancel={() => setEditorVisible(false)}
+					okText="确定"
+					cancelText="取消"
+					maskClosable={false}
+					// 桌面 width 600 + 原 70vh 限高;小屏 fullScreen + 全屏滚动(均由 useModalProps 提供)
+					{...modalProps}
+					bodyStyle={
+						modalProps.bodyStyle ?? { maxHeight: "70vh", overflowY: "auto" }
+					}
+				>
+					{draft ? renderForm(draft, patchDraft) : null}
+				</Modal>
+			</div>
 		</BusySpin>
 	);
 }
@@ -896,330 +890,6 @@ function projectsToStore(rows: Project[]): Project[] {
 }
 
 // ============================================================
-// 设备（嵌套：类别 → 设备数组，拍平成带 _category 的行）
-// ============================================================
-
-type DeviceRow = Device & { _category: string };
-
-function emptyDevice(): DeviceRow {
-	return {
-		_category: "",
-		name: "",
-		image: "",
-		specs: "",
-		description: "",
-		link: "",
-	};
-}
-
-function devicesFromStore(data: unknown): DeviceRow[] {
-	const obj = (data ?? {}) as Record<string, Device[]>;
-	const rows: DeviceRow[] = [];
-	for (const [category, list] of Object.entries(obj)) {
-		if (!Array.isArray(list)) continue;
-		for (const d of list) {
-			rows.push({ ...d, _category: category });
-		}
-	}
-	return rows;
-}
-
-function devicesToStore(rows: DeviceRow[]): Record<string, Device[]> {
-	const out: Record<string, Device[]> = {};
-	for (const r of rows) {
-		const category = r._category?.trim() || "未分类";
-		const device = compact({
-			name: r.name.trim(),
-			image: r.image.trim(),
-			specs: r.specs,
-			description: r.description,
-			link: r.link.trim(),
-			price: r.price?.trim(),
-		}) as Device;
-		if (!out[category]) out[category] = [];
-		out[category].push(device);
-	}
-	return out;
-}
-
-function deviceColumns(h: {
-	edit: (index: number) => void;
-	remove: (index: number) => void;
-}): ColumnProps<DeviceRow>[] {
-	return [
-		{ title: "类别", dataIndex: "_category", width: 110 },
-		{
-			title: "图片",
-			dataIndex: "image",
-			width: 64,
-			render: (url: string) =>
-				url ? (
-					<PhotoView src={url}>
-						<div style={{ cursor: "zoom-in", display: "inline-flex" }}>
-							<Image
-								src={url}
-								preview={false}
-								width={36}
-								height={36}
-								style={{ objectFit: "cover", borderRadius: 6 }}
-							/>
-						</div>
-					</PhotoView>
-				) : (
-					<Text type="tertiary">—</Text>
-				),
-		},
-		{ title: "名称", dataIndex: "name", width: 180 },
-		{ title: "规格", dataIndex: "specs", width: 160 },
-		{ title: "价格", dataIndex: "price", width: 90 },
-		opColumn<DeviceRow>(h),
-	];
-}
-
-// 类别 Select 的候选项由当前行推导，允许现场新建
-function deviceForm(
-	draft: DeviceRow,
-	set: (u: (d: DeviceRow) => DeviceRow) => void,
-	categories: string[],
-) {
-	const catOptions = categories.map((c) => ({ label: c, value: c }));
-	return (
-		<div>
-			<Field label="类别（可选已有或输入新类别）">
-				<Select
-					value={draft._category || undefined}
-					onChange={(v) => set((d) => ({ ...d, _category: String(v ?? "") }))}
-					optionList={catOptions}
-					filter
-					allowCreate
-					placeholder="如 数码 / 运动相机 / 路由器"
-					style={{ width: 260 }}
-				/>
-			</Field>
-			<Field label="名称">
-				<Input
-					value={draft.name}
-					onChange={(v) => set((d) => ({ ...d, name: v }))}
-				/>
-			</Field>
-			<ImageUrlField
-				label="图片"
-				value={draft.image}
-				onChange={(v) => set((d) => ({ ...d, image: v }))}
-			/>
-			<Field label="规格">
-				<Input
-					value={draft.specs}
-					onChange={(v) => set((d) => ({ ...d, specs: v }))}
-					placeholder="如 深蓝色 / 12G + 256G"
-				/>
-			</Field>
-			<Field label="描述">
-				<Input
-					value={draft.description}
-					onChange={(v) => set((d) => ({ ...d, description: v }))}
-				/>
-			</Field>
-			<Field label="链接">
-				<Input
-					value={draft.link}
-					onChange={(v) => set((d) => ({ ...d, link: v }))}
-					placeholder="https://..."
-				/>
-			</Field>
-			<Field label="价格（可选）">
-				<Input
-					value={draft.price ?? ""}
-					onChange={(v) => set((d) => ({ ...d, price: v }))}
-					placeholder="如 8999元"
-				/>
-			</Field>
-		</div>
-	);
-}
-
-// ============================================================
-// 技能
-// ============================================================
-
-const SKILL_CATEGORIES = [
-	{ label: "前端", value: "frontend" },
-	{ label: "后端", value: "backend" },
-	{ label: "数据库", value: "database" },
-	{ label: "工具", value: "tools" },
-	{ label: "其他", value: "other" },
-];
-const SKILL_LEVELS = [
-	{ label: "入门", value: "beginner" },
-	{ label: "中级", value: "intermediate" },
-	{ label: "高级", value: "advanced" },
-	{ label: "专家", value: "expert" },
-];
-
-function emptySkill(): Skill {
-	return {
-		id: "",
-		name: "",
-		description: "",
-		icon: "",
-		category: "frontend",
-		level: "intermediate",
-		experience: { years: 0, months: 0 },
-	};
-}
-
-function skillColumns(h: {
-	edit: (index: number) => void;
-	remove: (index: number) => void;
-}): ColumnProps<Skill>[] {
-	return [
-		{ title: "ID", dataIndex: "id", width: 120 },
-		{ title: "名称", dataIndex: "name", width: 150 },
-		{
-			title: "分类",
-			dataIndex: "category",
-			width: 90,
-			render: (c: string) =>
-				SKILL_CATEGORIES.find((x) => x.value === c)?.label ?? c,
-		},
-		{
-			title: "熟练度",
-			dataIndex: "level",
-			width: 90,
-			render: (l: string) =>
-				SKILL_LEVELS.find((x) => x.value === l)?.label ?? l,
-		},
-		{
-			title: "经验",
-			dataIndex: "experience",
-			width: 110,
-			render: (e: Skill["experience"]) =>
-				`${e?.years ?? 0} 年 ${e?.months ?? 0} 月`,
-		},
-		opColumn<Skill>(h),
-	];
-}
-
-function skillForm(draft: Skill, set: (u: (d: Skill) => Skill) => void) {
-	return (
-		<div>
-			<Field label="ID（唯一标识）">
-				<Input
-					value={draft.id}
-					onChange={(v) => set((d) => ({ ...d, id: v }))}
-					placeholder="如 javascript"
-				/>
-			</Field>
-			<Field label="名称">
-				<Input
-					value={draft.name}
-					onChange={(v) => set((d) => ({ ...d, name: v }))}
-				/>
-			</Field>
-			<Field label="描述">
-				<TextArea
-					value={draft.description}
-					onChange={(v) => set((d) => ({ ...d, description: v }))}
-					autosize={{ minRows: 2, maxRows: 5 }}
-				/>
-			</Field>
-			<Field label="图标（Iconify 名称）">
-				<Input
-					value={draft.icon}
-					onChange={(v) => set((d) => ({ ...d, icon: v }))}
-					placeholder="如 logos:javascript"
-				/>
-			</Field>
-			<Field label="分类">
-				<Select
-					value={draft.category}
-					onChange={(v) =>
-						set((d) => ({ ...d, category: v as Skill["category"] }))
-					}
-					optionList={SKILL_CATEGORIES}
-					style={{ width: 200 }}
-				/>
-			</Field>
-			<Field label="熟练度">
-				<Select
-					value={draft.level}
-					onChange={(v) => set((d) => ({ ...d, level: v as Skill["level"] }))}
-					optionList={SKILL_LEVELS}
-					style={{ width: 200 }}
-				/>
-			</Field>
-			<div style={{ display: "flex", gap: 16 }}>
-				<Field label="经验（年）">
-					<InputNumber
-						value={draft.experience.years}
-						onChange={(v) =>
-							set((d) => ({
-								...d,
-								experience: { ...d.experience, years: Number(v) || 0 },
-							}))
-						}
-						min={0}
-						style={{ width: 120 }}
-					/>
-				</Field>
-				<Field label="经验（月）">
-					<InputNumber
-						value={draft.experience.months}
-						onChange={(v) =>
-							set((d) => ({
-								...d,
-								experience: { ...d.experience, months: Number(v) || 0 },
-							}))
-						}
-						min={0}
-						max={11}
-						style={{ width: 120 }}
-					/>
-				</Field>
-			</div>
-			<Field label="相关项目 ID（可选）">
-				<TagInput
-					value={draft.projects ?? []}
-					onChange={(v) => set((d) => ({ ...d, projects: v }))}
-					placeholder="回车添加"
-				/>
-			</Field>
-			<Field label="证书（可选）">
-				<TagInput
-					value={draft.certifications ?? []}
-					onChange={(v) => set((d) => ({ ...d, certifications: v }))}
-					placeholder="回车添加"
-				/>
-			</Field>
-			<Field label="主题色（可选）">
-				<Input
-					value={draft.color ?? ""}
-					onChange={(v) => set((d) => ({ ...d, color: v }))}
-					placeholder="如 #F7DF1E"
-				/>
-			</Field>
-		</div>
-	);
-}
-
-function skillsToStore(rows: Skill[]): Skill[] {
-	return rows.map((r) =>
-		compact({
-			id: r.id.trim(),
-			name: r.name.trim(),
-			description: r.description,
-			icon: r.icon.trim(),
-			category: r.category,
-			level: r.level,
-			experience: r.experience,
-			projects: r.projects,
-			certifications: r.certifications,
-			color: r.color?.trim(),
-		}),
-	) as Skill[];
-}
-
-// ============================================================
 // 时间线
 // ============================================================
 
@@ -1474,50 +1144,6 @@ function timelineToStore(rows: TimelineItem[]): TimelineItem[] {
 			featured: r.featured || undefined,
 		}) as TimelineItem;
 	});
-}
-
-// ============================================================
-// 设备 Tab 需要把当前类别列表传给表单，单独包一层
-// ============================================================
-
-function DevicesPanel() {
-	// 从 KV 通道缓存读当前设备嵌套对象，推导类别候选；表单 allowCreate 允许现场新建类别。
-	// queryKey 与 DataTabPanel 的 ["devices"] 一致，共享同一份 react-query 缓存。
-	const { data } = useQuery({
-		queryKey: ["devices"],
-		queryFn: async () => {
-			const res = await devicesApi.getAll();
-			return { data: res.devices };
-		},
-	});
-	const categories = data
-		? Object.keys((data.data ?? {}) as Record<string, unknown>)
-		: [];
-
-	return (
-		<DataTabPanel<DeviceRow>
-			name="devices"
-			addLabel="新建设备"
-			rowKey={(row) => `${row?._category ?? ""}-${row?.name ?? ""}`}
-			columns={deviceColumns}
-			emptyRow={emptyDevice}
-			renderForm={(draft, set) => deviceForm(draft, set, categories)}
-			validate={(d) => (d.name.trim() ? null : "设备名称不能为空")}
-			fromStore={devicesFromStore}
-			toStore={devicesToStore}
-			emptyText="还没有设备"
-			mobileScrollX={800}
-			queryKey={["devices"]}
-			loader={async () => (await devicesApi.getAll()).devices}
-			saver={async (payload) =>
-				devicesApi.replaceAll(payload as DeviceCategory)
-			}
-			savedMessage="已保存，约 1 分钟内前台生效"
-			dirtyHint="本地有未保存的修改。点击「保存」写回，约 1 分钟内前台生效（无需构建）。"
-			saveLabel="保存"
-			invalidateBuilds={false}
-		/>
-	);
 }
 
 // ============================================================
@@ -1808,9 +1434,7 @@ function FriendApplicationsPanel() {
 
 			{!isLoading && items.length === 0 ? (
 				<Empty
-					title={
-						statusFilter === "pending" ? "暂无待审核申请" : "暂无申请记录"
-					}
+					title={statusFilter === "pending" ? "暂无待审核申请" : "暂无申请记录"}
 					description="访客在博客友链页提交后会出现在这里"
 				/>
 			) : (
@@ -1867,7 +1491,7 @@ function FriendApplicationsPanel() {
 }
 
 // ============================================================
-// 页面：友链 / 申请审核 / 项目 / 设备 / 技能 / 时间线
+// 页面：友链 / 申请审核 / 项目 / 时间线
 // ============================================================
 
 export function DataPage() {
@@ -1882,8 +1506,8 @@ export function DataPage() {
 					资料数据
 				</Title>
 				<Text type="tertiary" style={{ display: "block" }}>
-					友链 / 设备 / 申请审核走 KV：保存或通过后约 1 分钟内前台生效、无需构建。
-					项目 / 技能 / 时间线走 Git：写回仓库并触发构建，约 3-5 分钟生效。
+					友链 / 申请审核走 KV：保存或通过后约 1 分钟内前台生效、无需构建。 项目
+					/ 时间线走 Git：写回仓库并触发构建，约 3-5 分钟生效。
 					若友链表有未保存草稿，请先刷新再编辑，以免覆盖审核通过新写入的友链。
 				</Text>
 			</div>
@@ -1950,29 +1574,6 @@ export function DataPage() {
 						mobileScrollX={800}
 					/>
 				</TabPane>
-
-				<TabPane tab="设备" itemKey="devices">
-					<DevicesPanel />
-				</TabPane>
-
-				<TabPane tab="技能" itemKey="skills">
-					<DataTabPanel<Skill>
-						name="skills"
-						addLabel="新建技能"
-						rowKey={(row) => row?.id ?? ""}
-						columns={skillColumns}
-						emptyRow={emptySkill}
-						renderForm={skillForm}
-						validate={(d) =>
-							d.id.trim() && d.name.trim() ? null : "ID 和名称不能为空"
-						}
-						fromStore={(data) => (Array.isArray(data) ? (data as Skill[]) : [])}
-						toStore={(rows) => skillsToStore(rows)}
-						emptyText="还没有技能"
-						mobileScrollX={760}
-					/>
-				</TabPane>
-
 				<TabPane tab="时间线" itemKey="timeline">
 					<DataTabPanel<TimelineItem>
 						name="timeline"

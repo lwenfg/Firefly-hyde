@@ -18,12 +18,15 @@ import { requireAuth } from "../../_shared/requireAuth.js";
 
 const DATA_DIR = "src/data";
 // 允许读写的资料数据文件名白名单（阶段 4 博客前台 data JSON 化后逐步启用）
-const ALLOWED_NAMES = new Set(["projects", "devices", "skills", "timeline", "friends"]);
+const ALLOWED_NAMES = new Set(["projects", "timeline", "friends"]);
 
 function jsonResponse(data, status = 200) {
 	return new Response(JSON.stringify(data), {
 		status,
-		headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+		headers: {
+			"content-type": "application/json; charset=utf-8",
+			"cache-control": "no-store",
+		},
 	});
 }
 
@@ -81,13 +84,20 @@ async function handlePut(context) {
 	// 2 空格缩进 + 末尾换行，贴近仓库现有 JSON 风格
 	const content = `${JSON.stringify(body.data, null, 2)}\n`;
 	const relPath = `${DATA_DIR}/${name}.json`;
-	const message = (body.commitMessage && String(body.commitMessage).trim()) || `数据: 更新 ${name}.json`;
+	const message =
+		(body.commitMessage && String(body.commitMessage).trim()) ||
+		`数据: 更新 ${name}.json`;
 
 	try {
 		const result = await commitAndPush(context.env, message, async (dir) => {
 			await writeRepoFile(dir, relPath, content);
 		});
-		return jsonResponse({ ok: true, name, commit: result.commitOid, branch: result.branch });
+		return jsonResponse({
+			ok: true,
+			name,
+			commit: result.commitOid,
+			branch: result.branch,
+		});
 	} catch (err) {
 		const status = err instanceof GitOpError ? err.status : 500;
 		return jsonResponse({ error: err?.message || "保存失败" }, status);
