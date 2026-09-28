@@ -56,7 +56,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "过去可知不可控，未来可控不可知",
 
 	// 站点 URL
-	site_url: "https://lwenfg.top",
+	site_url: "https://lwenfg.pages.dev",
 
 	// 站点描述
 	description:

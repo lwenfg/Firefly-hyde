@@ -17,22 +17,11 @@ export const galleryConfig: GalleryConfig = {
 		// 每添加一个数组项就相当于添加了一个相册，记得在 public/gallery/ 目录下创建对应的子目录并放入图片
 		{
 			id: "scenery",
-			name: "风景",
-			description: "风景相册",
+			name: "TEST",
+			description: "TEST",
 			location: "六片山",
 			date: "2026-05-06",
 			tags: ["山", "风景"],
-		},
-		{
-			id: "Mount Sanqing",
-			name: "三清山",
-			description:
-				"三清山相册",
-			location: "三清山",
-			date: "2026-07-04",
-			tags: ["爬山", "三清山"],
-			password: "260704",
-			passwordHint: "示例密码	xx",
 		},
 	],
 
