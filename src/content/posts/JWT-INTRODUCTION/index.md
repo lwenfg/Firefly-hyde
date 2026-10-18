@@ -4,7 +4,7 @@ published: 2026-10-18
 pinned: false
 image: "api"
 slug: /jwt-introduction
-tags: ["HTTP"]
+tags: ["HTTP","JWT"]
 category: 后端
 draft: false
 lang: ""
@@ -116,7 +116,7 @@ Session（会话）是一种**服务端有状态**的身份管理机制，用户
 
 
 
-\> JWT和Session都实现了相似的功能：用户身份识别和登录状态维持。那他们JWT相较于Session都有哪些优势和劣势？
+> JWT和Session都实现了相似的功能：用户身份识别和登录状态维持。那他们JWT相较于Session都有哪些优势和劣势？
 
 JWT 相较于 Session 最核心的优势在于其**无状态性**：服务端无需维护任何会话存储。Session 每次请求都需查询数据库或缓存，存在网络延迟和存储瓶颈；而 JWT 仅需本地密码学运算即可完成验证，响应更快且无外部依赖。
 
@@ -124,7 +124,7 @@ JWT 相较于 Session 最核心的优势在于其**无状态性**：服务端无
 
 
 
-最后用一句话总结就是：**Session 是“服务端记住你”，JWT 是“你自己证明你是谁”。**或许这就是密码学的魅力~
+最后用一句话总结就是：Session 是“服务端记住你”，JWT 是“你自己证明你是谁”——或许这就是密码学的魅力~
 
 ## 参考文献
 
