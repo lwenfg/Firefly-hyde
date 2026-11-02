@@ -5,7 +5,7 @@ export const announcementConfig: AnnouncementConfig = {
 	title: "",
 
 	// 公告内容
-	content: "👋🏻 Hi，我是lwenfg，欢迎您！",
+	content: "👋🏻 Hi，我是lwenfg，欢迎你！这里是我分享知识和记录生活的地方，希望你能在这里找到有价值的内容",
 
 	// 是否允许用户关闭公告
 	closable: false,

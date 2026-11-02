@@ -6,17 +6,12 @@ I am currently a senior undergraduate student at the School of Cyber Science and
 
 My research interests primarily focus on Software and System Security and Trustworthy AI. I will be supervised by Professor [Wenrui Diao](https://diaowenrui.github.io/), a distinguished expert in the field of software and system security.
 
-I look forward to learning and growing together with the community in the future!
+I look forward to learning and growing together with the community in the future! If you have any questions, please feel free to contact me by email or leave a message in the comment section.
 
-## 🛠️ 关于本站
 
-这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。此外，本项目还参考了博主[Hyde](https://seasir.top/)的网站实现。
 
-**⭐Firefly开源地址：[https://github.com/CuteLeaf/Firefly](https://github.com/CuteLeaf/Firefly)** 
+> 这个网站使用 **Astro** 框架构建，采用了 [Firefly](https://github.com/CuteLeaf/Firefly) 模板，Firefly 是基于 [Fuwari](https://github.com/saicaca/fuwari) 的二次开发。此外，本项目还参考了博主[Hyde](https://seasir.top/)的网站实现。
 
-**⭐Fuwari开源地址：[https://github.com/saicaca/fuwari](https://github.com/saicaca/fuwari)**
-
-**⭐Hyde's Blog：[https://seasir.top/](https://seasir.top/)**
 
 ::cnb{repo="W3C/w3c"}
 
